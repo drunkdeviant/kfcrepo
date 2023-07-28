@@ -1,8 +1,29 @@
 import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const Login = () => {
+  const { handleBlur, handleSubmit, handleChange, touched, errors, values } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+      },
+      validationSchema: Yup.object({
+        email: Yup.string()
+          .email("Please provide email")
+          .required("Email is required"),
+        password: Yup.string()
+          .max(6, "Must be 6 characters or more")
+          .required("Password is required"),
+      }),
+      onSubmit: (values) => {
+        console.log(values);
+      },
+    });
   return (
     <>
       <Header />
@@ -13,7 +34,7 @@ const Login = () => {
               <h3>LOGIN WITH SOCIAL LINKS</h3>
             </div>
             <p>
-              Already Registered<a href="">Login</a>
+              Don't have account<Link to="/register">Register</Link>
             </p>
             <hr />
             <button className="btn btn-danger d-block w-100 mb-2">
@@ -23,22 +44,40 @@ const Login = () => {
               Login with Facebook
             </button>
             <hr />
-            <form className="row g-3">
+            <form className="row g-3" onSubmit={handleSubmit}>
               <div className="col-md-12">
-                <label for="inputEmail4" className="form-label">
+                <label htmlFor="email" className="form-label">
                   Email
                 </label>
-                <input type="email" className="form-control" id="inputEmail4" />
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  values={values.email}
+                  onBlur={handleBlur}
+                  name="email"
+                  className="form-control"
+                  id="email"
+                />
+                <p className="error">
+                  {touched.email && errors.email ? errors.email : null}
+                </p>
               </div>
               <div className="col-md-12">
-                <label for="inputPassword4" className="form-label">
+                <label htmlFor="password" className="form-label">
                   Password
                 </label>
                 <input
-                  type="password"
+                  type="text"
+                  onChange={handleChange}
+                  values={values.password}
+                  onBlur={handleBlur}
+                  name="password"
                   className="form-control"
-                  id="inputPassword4"
+                  id="password"
                 />
+                <p className="error">
+                  {touched.password && errors.password ? errors.password : null}
+                </p>
               </div>
               <div className="col-12">
                 <button type="submit" className="btn btn-primary">
@@ -55,9 +94,9 @@ const Login = () => {
               By creating account with us, purchasing on our website becomes
               much faster and easier.
             </p>
-            <button type="button" class="btn btn-outline-danger">
+            <Link to="/register" className="btn btn-outline-danger">
               NEW CUSTOMER
-            </button>
+            </Link>
           </div>
         </div>
       </div>

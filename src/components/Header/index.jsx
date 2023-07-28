@@ -2,31 +2,34 @@ import React from "react";
 import logo from "../../assets/img/kfcLogo.492728c6.svg";
 import "./header.css";
 import Menu from "../Menu/";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <>
       <div className="headerWrapper">
         <div className="logo">
-          <img src={logo} alt="" />
+          <Link to="/home">
+            <img src={logo} alt="" />
+          </Link>
         </div>
         <div className="auth-link">
           <ul>
             <li>
-              <a href="">
-                <i class="bi bi-geo-alt"></i>Store Locator
-              </a>
+              <Link to="">
+                <i className="bi bi-geo-alt"></i>Store Locator
+              </Link>
             </li>
             <li>
-              <a href="">
-                <i class="bi bi-person-fill"></i>Signin/Register
-              </a>
+              <Link to="/login">
+                <i className="bi bi-person-fill"></i>Signin/Register
+              </Link>
             </li>
             <li>
-              <a href="">My Account</a>
+              <Link to="">My Account</Link>
             </li>
             <li>
-              <a href="">Logout</a>
+              <Link to="">Logout</Link>
             </li>
           </ul>
         </div>
